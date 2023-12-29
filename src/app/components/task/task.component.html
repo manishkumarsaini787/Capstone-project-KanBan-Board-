@@ -1,0 +1,76 @@
+
+<div class="container">
+   <div class="">
+    
+    <div class="close"><button mat-button (click)="onNoClick()"><mat-icon>close</mat-icon></button></div>
+    
+    <div class="header">
+        <div class="title">
+            <mat-form-field color="primary" appearance="outline" class="autocomplete-container">
+                <input matInput type="text" name="taskTitle" id="taskTitle" placeholder="Task Title" [(ngModel)]="task.taskTitle" (change)="updateTask()">
+            </mat-form-field>
+        </div>
+        <div class="assignees">
+            <div (click)="selestassignee.open()">
+
+                <mat-select-trigger>
+                  <mat-icon *ngIf="!task.assignees?.length">person_add</mat-icon>
+                  <span *ngFor="let assignee of task.assignees">{{assignee[0]}}</span>
+                </mat-select-trigger>
+              </div>
+            <mat-select  #selestassignee [(value)]="task.assignees" panelClass="panel"
+                        (selectionChange)="updateAssignees($event)" multiple>
+
+                        <mat-option *ngFor="let member of project.members" [value]="member">{{member}}</mat-option>
+                      </mat-select>
+        </div>
+    </div>
+    <div class="contents">
+        <div class="content">
+            <mat-form-field appearance="outline">
+                <textarea matInput placeholder="Task Content" [(ngModel)]="task.contents" (change)="updateTask()"></textarea>
+              </mat-form-field>
+        </div>
+        <div class="history"></div>
+    </div>
+    <div class="footer">
+        <div class="status">
+            <button mat-button [matMenuTriggerFor]="status">{{statusName}}<mat-icon>keyboard_arrow_right</mat-icon></button>
+            <mat-menu #status="matMenu" yPosition="above">
+              <button mat-menu-item *ngFor="let status of project.statusList" (click)="changeTaskStatus(status.statusId)">{{status.status}}</button>
+            </mat-menu>
+            <button mat-button (click)="completeTask()"><mat-icon>done_all</mat-icon></button>
+        </div>
+        <div class="priority">
+            <button [ngClass]="getClass(task.priority)" mat-button
+                      [matMenuTriggerFor]="priority"><span>{{task.priority}}</span><br><mat-icon>flag</mat-icon></button>
+                    <mat-menu #priority="matMenu">
+                      <button mat-menu-item class="high" (click)="setPriority(1)"><mat-icon
+                          class="high">flag</mat-icon>High</button>
+                      <button mat-menu-item class="normal" (click)="setPriority(2)"><mat-icon
+                          class="normal">flag</mat-icon>Normal</button>
+                      <button mat-menu-item class="low" (click)="setPriority(3)"><mat-icon
+                          class="low">flag</mat-icon>Low</button>
+                      <button mat-menu-item class="clear" (click)="setPriority(0)">Clear</button>
+                    </mat-menu>
+        </div>
+        <div class="start-date">
+            <input class="dateInput" matInput [matDatepicker]="startDate"
+                      (dateChange)="startDateChange($event)" [min]="currentDate" [max]="task.dueDate">
+                    <!-- <mat-datepicker-toggle *ngIf="task.startDate==null || undefined" matSuffix [for]="startDate"></mat-datepicker-toggle> -->
+                    <button mat-button   (click)="startDate.open()"><span>Start Date</span><br>{{getStartDate(task)}}<span *ngIf="task.startDate==null || undefined || getStartDate(task)?.length==0"><mat-icon>date_range</mat-icon></span></button>
+                    <mat-datepicker #startDate></mat-datepicker>
+        </div>
+        <div class="due-date">
+            <input class="dateInput" matInput [matDatepicker]="dueDate"
+                      (dateChange)="dueDateChange($event)" [min]="task.startDate">
+                    <!-- <mat-datepicker-toggle *ngIf="task.dueDate==null" matSuffix [for]="dueDate"></mat-datepicker-toggle> -->
+                    <button mat-button (click)="dueDate.open()"><span>Due Date</span><br>{{getDueDate(task)}}<span *ngIf="task.dueDate==null || undefined || getDueDate(task)?.length==0"><mat-icon>date_range</mat-icon></span></button>
+                    <mat-datepicker #dueDate></mat-datepicker>
+        </div>
+        <div class="delete-btn">
+          <button mat-icon-button (click)="deleteTask()"><mat-icon>delete</mat-icon></button>
+        </div>
+    </div>
+   </div>
+</div>

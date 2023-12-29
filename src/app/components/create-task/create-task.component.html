@@ -1,0 +1,128 @@
+
+<!-- <mat-card  class="task">
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+      <mat-card-header>
+        <input class="form-field w-100" type="text" name="taskTitle" id="taskTitle" placeholder="Task Title"
+            formControlName="taskTitle">
+      </mat-card-header>
+      <mat-card-content>
+        <p><input class="form-field w-100" type="text" name="taskContent" id="taskContent" placeholder="Task Content" formControlName="contents"></p>
+      </mat-card-content>
+      <mat-card-actions>
+
+
+        <mat-form-field appearance="fill">
+          <mat-label>Priority</mat-label>
+          <mat-select formControlName="priority">
+            <mat-option class="high" value="1"><mat-icon class="high">flag</mat-icon>High</mat-option>
+            <mat-option class="normal" value="2"><mat-icon class="normal">flag</mat-icon>Normal</mat-option>
+            <mat-option class="low" value="3"><mat-icon class="low">flag</mat-icon>Low</mat-option>
+            <mat-option class="clear" value="0" selected>Clear</mat-option>
+
+          </mat-select>
+        </mat-form-field>
+
+
+        
+
+
+        <div class="date">
+          <input class="dateInput" matInput [matDatepicker]="picker" [min]="currentDate" [max]="taskForm.controls['dueDate'].value"
+            formControlName="startDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <label (click)="picker.open()"></label>
+          <mat-datepicker #picker></mat-datepicker>
+        </div>
+
+        <div class="date">
+          <input class="dateInput" matInput [matDatepicker]="picker2" [min]="taskForm.controls['startDate'].value" formControlName="dueDate">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <label (click)="picker2.open()"></label>
+          <mat-datepicker #picker2></mat-datepicker>
+        </div>
+
+        <div>
+          <mat-select-trigger>
+          </mat-select-trigger>
+        </div>
+
+        <div class="select">
+          <mat-form-field appearance="fill">
+            <mat-select multiple formControlName="assignees">
+              <mat-option *ngFor="let member of project.members" [value]="member">{{member}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </mat-card-actions>
+      <button  class="btn btn-primary" matDialogClose="">Cancel</button>
+      <button  class="btn btn-primary" [disabled]="!taskForm.valid" type="submit"  [mat-dialog-close]="data">Submit</button>
+    
+    </form>
+  </mat-card> -->
+
+<!-- ------------------------------------------------------------------------------- -->
+
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="form">
+    <mat-form-field class="full-width">
+      <mat-label>Task Title</mat-label>
+      <input matInput type="text" name="taskTitle" id="taskTitle" placeholder="Task Title"
+            formControlName="taskTitle" (change)="printProject()">
+            <mat-error color="red" *ngIf="taskTitle?.errors?.['required']">Task Title is required</mat-error>
+    </mat-form-field>
+  
+    
+      
+      <mat-form-field class="full-width">
+        <mat-label>Content</mat-label>
+        <textarea matInput placeholder="Task Content" formControlName="contents"></textarea>
+      </mat-form-field>
+    
+  
+    <table class="full-width" ><tr>
+      <td><mat-form-field appearance="fill" class="half-width">
+        <mat-label>Start date</mat-label>
+        <input matInput [matDatepicker]="startdatepicker" [min]="currentDate" [max]="taskForm.controls['dueDate'].value" formControlName="startDate">
+        <mat-datepicker-toggle matIconSuffix [for]="startdatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #startdatepicker>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+      </mat-form-field></td>
+      <td><mat-form-field appearance="fill" class="half-width">
+        <mat-label>Due date</mat-label>
+        <input matInput [matDatepicker]="duedatepicker" [min]="taskForm.controls['startDate'].value" formControlName="dueDate">
+        <mat-datepicker-toggle matIconSuffix [for]="duedatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #duedatepicker>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+      </mat-form-field></td>
+    </tr></table>
+
+    <table class="example-full-width" cellspacing="0"><tr>
+      <td><mat-form-field appearance="fill" class="half-width">
+        <mat-label>Priority</mat-label>
+        <mat-select formControlName="priority">
+          <mat-option class="high" value="1"><mat-icon class="high">flag</mat-icon>High</mat-option>
+          <mat-option class="normal" value="2"><mat-icon class="normal">flag</mat-icon>Normal</mat-option>
+          <mat-option class="low" value="3"><mat-icon class="low">flag</mat-icon>Low</mat-option>
+          <mat-option class="clear" value="0" selected>Clear</mat-option>
+
+        </mat-select>
+      </mat-form-field></td>
+      <td><mat-form-field appearance="fill" class="half-width">
+        <mat-label>Assignees</mat-label>
+        <mat-select multiple formControlName="assignees">
+          <mat-option *ngFor="let member of project.members" [value]="member">{{member}}</mat-option>
+        </mat-select>
+        <mat-error color="red" *ngIf="assignees?.errors">{{errorMessage}}</mat-error>
+      </mat-form-field></td>
+    </tr></table>
+    <button mat-raised-button color="primary" (click)="onNoClick()">Cancel</button>
+      <button mat-raised-button color="primary" [disabled]="!taskForm.valid" type="submit"  [mat-dialog-close]="data">Submit</button>
+    
+  </form>

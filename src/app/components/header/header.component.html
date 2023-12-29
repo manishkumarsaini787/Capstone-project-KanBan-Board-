@@ -1,0 +1,115 @@
+<div class="header">
+  <div class="heading">
+    <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()"
+          >
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+
+        <h1><button (click)="home()" class="b">KANBAN BOARD</button></h1>
+  </div>
+
+  <form class="d-flex mt-3" role="search">
+    <input class="form-control me-2"  type="text" placeholder="Search Project"  name="searchText" [(ngModel)]="searchText" (input)="search()">
+
+
+    <button class="form-control me-2" type="reset" (click)="clear()" >clear</button>
+
+
+  </form>
+
+
+  <p>
+    <mat-icon matBadge="9">notifications</mat-icon>
+  </p>
+
+
+
+
+
+  <div class="dropdown ">
+    <div data-bs-toggle="dropdown" aria-expanded="true">
+      <div  *ngIf="!(isHandset$ | async) " class="profile ">
+        <!-- <img src="../../../assets/user.png" alt="img"> -->
+        <img mat-card-image [src]="user.imageUrl==null || user.imageUrl==undefined || user.imageUrl==''? '../../../assets/user.png':user.imageUrl">
+        <span >
+          <p class="p">HI {{user.name}}</p>
+          <!-- <p >{{user.email}}</p> -->
+        </span>
+      </div>
+    </div>
+    <ul class="dropdown-menu">
+      <li class="dropdown-menu-item btn w-100" (click)="openProfileDialog()">Profile</li>
+      <li class="dropdown-menu-item btn w-100" (click)="logout()">Logout</li>
+    </ul>
+  </div>
+</div>
+
+
+<div class="main-content" >
+  <mat-drawer-container  class="drawer-container">
+      <mat-drawer  #drawer class="sidenav"
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false"
+      >
+          <mat-nav-list>
+
+
+            <div class="dropdown ">
+              <div data-bs-toggle="dropdown" aria-expanded="true">
+                <div  *ngIf="(isHandset$ | async) " class="profile ">
+                  <!-- <img src="../../../assets/user.png" alt="img"> -->
+                  <img mat-card-image [src]="user.imageUrl==null || user.imageUrl==undefined || user.imageUrl==''? '../../../assets/user.png':user.imageUrl">
+                  <span >
+                    <p >Hi {{user.name}}</p>
+                    <!-- <p >{{user.email}}</p> -->
+                  </span>
+                </div>
+              </div>
+              <ul class="dropdown-menu">
+                <li class="dropdown-menu-item btn w-100" (click)="openProfileDialog()">Profile</li>
+                <li class="dropdown-menu-item btn w-100" (click)="logout()">Logout</li>
+              </ul>
+            </div>
+<mat-expansion-panel [togglePosition]="'before'">
+              <mat-expansion-panel-header #exppanel >
+                <div>
+                <mat-panel-title>
+                 Projects
+                </mat-panel-title>
+                <mat-panel-description>
+                 <button  mat-icon-button (click)="exppanel._toggle()" [matMenuTriggerFor]="projectsMenu"><mat-icon>more_horiz</mat-icon></button>
+                 <mat-menu #projectsMenu="matMenu">
+                  <button mat-menu-item (click)="openProjectDialog({})">
+                    <span >Create Project</span>
+                  </button>
+                </mat-menu>
+                </mat-panel-description>
+              </div>
+               </mat-expansion-panel-header>
+               <!-- <p *ngFor="let project of projects"><a [routerLink]="['/project',project.projectId]">{{project.projectTitle}}</a></p> -->
+              <div class="project-list" *ngFor="let project of projects">
+                <p><a [routerLink]="['project',project.projectId]">{{project.projectTitle}}</a></p>
+                <a  [matMenuTriggerFor]="projectMenu"><mat-icon>more_horiz</mat-icon></a>
+                  <mat-menu #projectMenu="matMenu">
+                   <a mat-menu-item (click)="openProjectDialog(project)">Edit</a>
+                   <a mat-menu-item (click)="deleteProject(project.projectId)">Delete</a>
+                 </mat-menu>
+              </div>
+
+              </mat-expansion-panel>
+          </mat-nav-list>
+
+          <!-- <footer class="drawer-footer"><h3>dark theme</h3></footer> -->
+      </mat-drawer>
+
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+
+    </mat-drawer-container>
+</div>

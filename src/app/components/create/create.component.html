@@ -1,0 +1,35 @@
+  <div class="formbg">
+    <form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
+      <mat-card class="shipping-card">
+        <mat-card-header class="header">
+          <mat-card-title> Create Project </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+  
+            <div class="col">
+              <mat-form-field class="full-width" >
+                <input matInput placeholder="Project Title" formControlName="projectTitle" >
+                <mat-error *ngIf="addressForm.controls['projectTitle'].hasError('required')">
+                  Project name is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+  
+            <mat-form-field class="full-width">
+                <mat-label>Members</mat-label>
+                <mat-select formControlName="members" multiple>
+                  <!-- <mat-select-trigger>
+                  </mat-select-trigger> -->
+                  <mat-option *ngFor="let user of emails" [value]="user">{{user}} </mat-option>
+                </mat-select>
+              </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+            <button  class="btn btn-primary" (click)="onNoClick()">Cancel</button>
+          <button *ngIf="project.projectId==null || project.projectId==undefined || project.projectId==0"  class="btn btn-primary" [disabled]="!addressForm.valid" type="submit"  [mat-dialog-close]="data">Submit</button>
+          <button *ngIf="!(project.projectId==null || project.projectId==undefined || project.projectId==0)" class="btn btn-primary"  [mat-dialog-close]="data" (click)="updateProject()">Update</button>
+        </mat-card-actions>
+      </mat-card>
+    </form>
+    </div>
+  

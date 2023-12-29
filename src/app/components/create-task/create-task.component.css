@@ -1,0 +1,27 @@
+.form {
+   
+    width: 100%;
+  }
+  
+  .full-width {
+    width: 95%;
+  }
+  table{
+    display: flex;
+    flex-direction: row;
+  }
+  .half-width {
+    width: 220px;
+  }
+  .high{
+    color: red;
+}
+.normal{
+    color: green;
+}
+.low{
+    color: orange;
+}
+.clear{
+    color: gray;
+}

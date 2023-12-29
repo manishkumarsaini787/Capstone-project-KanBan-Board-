@@ -1,0 +1,205 @@
+<div class="root">
+
+  <div class="add-task-button"><button mat-raised-button color="primary" (click)="openCreateTaskDialog()">Add Task</button></div>
+  <div class="board">
+
+    <div class="board-bar">
+      <p class="board-name">{{ project.projectTitle }}</p>
+    </div>
+
+    <div class="board-wrapper">
+
+      <div class="container-sm board-columns" cdkDropListGroup>
+        <div class="board-column" [ngClass]="status.status?.charAt(0)" *ngFor="let status of project.statusList">
+
+          <div class="column-title">
+            <input *ngIf="renameStatusDisable==status.statusId" type="text" name="" id="" [value]="status.status"   (focusout)="onStatusChange($event,status)">
+            <span *ngIf="renameStatusDisable!=status.statusId">{{status.status}}</span>
+            <a *ngIf="!(status.status?.trim()?.toLowerCase()=='to do' || status.status?.trim()?.toLowerCase()=='complete')"  [matMenuTriggerFor]="statusMenu"><mat-icon>more_horiz</mat-icon></a>
+            <mat-menu #statusMenu="matMenu">
+             <button mat-menu-item (click)="renameStatusDisabledChange(status.statusId)">Rename</button>
+             <button mat-menu-item (click)="deleteStatus(status.statusId)">Delete</button>
+           </mat-menu>
+          </div>
+
+
+          <div class="tasks-container" cdkDropList [cdkDropListData]="status?.tasks" (cdkDropListDropped)="drop($event)">
+            <div>
+
+              <mat-card  class="container task" *ngFor="let task of status.tasks" cdkDrag>
+                <div (click)="openTaskDialog(status.statusId,task)">
+                  <mat-card-header>
+                    <mat-card-title>{{task.taskTitle}}</mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <p>{{task.contents}}</p>
+                  </mat-card-content>
+                </div>
+                <mat-card-actions>
+
+                  <div class="priority">
+                    <button [ngClass]="getClass(task.priority)" mat-icon-button
+                      [matMenuTriggerFor]="menu"><mat-icon>flag</mat-icon></button>
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item class="high" (click)="setPriority(task,1)"><mat-icon
+                          class="high">flag</mat-icon>High</button>
+                      <button mat-menu-item class="normal" (click)="setPriority(task,2)"><mat-icon
+                          class="normal">flag</mat-icon>Normal</button>
+                      <button mat-menu-item class="low" (click)="setPriority(task,3)"><mat-icon
+                          class="low">flag</mat-icon>Low</button>
+                      <button mat-menu-item class="clear" (click)="setPriority(task,0)">Clear</button>
+                    </mat-menu>
+                  </div>
+
+
+
+                  <div class="date">
+                    <input class="dateInput" matInput [matDatepicker]="picker"
+                      (dateChange)="startDateChange(task,$event)" [min]="currentDate" [max]="task.dueDate">
+                    <mat-datepicker-toggle *ngIf="task.startDate==null" matSuffix
+                      [for]="picker"></mat-datepicker-toggle>
+                    <p *ngIf="task.startDate!=null" (click)="picker.open()">{{getStartDate(task)}}</p>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </div>
+
+                  <div class="date">
+                    <input class="dateInput" matInput [matDatepicker]="picker2"
+                      (dateChange)="dueDateChange(task,$event)" [min]="task.startDate">
+                    <mat-datepicker-toggle *ngIf="task.dueDate==null" matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <label *ngIf="task.dueDate!=null" (click)="picker2.open()">{{getDueDate(task)}}</label>
+                    <mat-datepicker #picker2></mat-datepicker>
+                  </div>
+                  <div (click)="selestassignee.open()">
+
+                    <mat-select-trigger>
+                      <mat-icon *ngIf="!task.assignees?.length">person_add</mat-icon>
+                      <span *ngFor="let assignee of task.assignees">{{assignee[0]}}</span>
+                    </mat-select-trigger>
+                  </div>
+
+                  <!-- <div (click)="show = show ? false : true"> -->
+
+
+                  <!-- <div *ngIf="show" class="select"> -->
+                  <div  class="select">
+
+                    <!-- <mat-form-field appearance="fill"> -->
+
+                      <mat-select  #selestassignee [value]="task.assignees" panelClass="panel"
+                        (selectionChange)="updateAssignees(task,$event)" multiple>
+
+                        <mat-option *ngFor="let member of project.members" [value]="member">{{member}}</mat-option>
+                      </mat-select>
+                    <!-- </mat-form-field> -->
+                  </div>
+
+                  <!-- <a [matMenuTriggerFor]="assigneemenu" (click)="myselect.open()">Menu</a>
+                  <mat-menu #assigneemenu="matMenu">
+                    <mat-form-field appearance="fill">
+                      <mat-select #myselect [(value)]="task.assignees" panelClass="panel"
+                        (selectionChange)="updateAssignees(task,$event)" multiple>
+
+                        <mat-option *ngFor="let member of project.members" [value]="member">{{member}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </mat-menu> -->
+
+
+
+                </mat-card-actions>
+              </mat-card>
+
+              <!-- -------------------------Create task----------------------------------- -->
+              <!-- <button mat-icon-button class="add-task-btn btn"  (click)="openCreateTaskDialog(status.statusId)"><mat-icon>add</mat-icon></button> -->
+
+              <!-- <div class=dropdown>
+                <button class="btn" data-bs-toggle="dropdown" aria-expanded="false" (click)="taskBox=taskBox==status.statusId?0:status.statusId"><i class="bi bi-plus-circle-fill"></i></button>
+                <div class="dropdown-menu position-fixed add-task-box container">
+                  <mat-card  class="task">
+                    <form [formGroup]="taskForm" (ngSubmit)="addTask(project.projectId,status.statusId)">
+                      <mat-card-header>
+                        <input class="form-field w-100" type="text" name="taskTitle" id="taskTitle" placeholder="Task Title"
+                            formControlName="taskTitle">
+                      </mat-card-header>
+                      <mat-card-content>
+                        <p><input class="form-field w-100" type="text" name="taskContent" id="taskContent" placeholder="Task Content" formControlName="contents"></p>
+                      </mat-card-content>
+                      <mat-card-actions>
+
+
+                        <mat-form-field appearance="fill">
+                          <mat-label>Priority</mat-label>
+                          <mat-select formControlName="priority">
+                            <mat-option class="high" value="1"><mat-icon class="high">flag</mat-icon>High</mat-option>
+                            <mat-option class="normal" value="2"><mat-icon class="normal">flag</mat-icon>Normal</mat-option>
+                            <mat-option class="low" value="3"><mat-icon class="low">flag</mat-icon>Low</mat-option>
+                            <mat-option class="clear" value="0" selected>Clear</mat-option>
+
+                          </mat-select>
+                        </mat-form-field>
+
+
+
+
+
+                        <div class="date">
+                          <input class="dateInput" matInput [matDatepicker]="picker" [min]="currentDate" [max]=""
+                            formControlName="startDate">
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <label (click)="picker.open()"></label>
+                          <mat-datepicker #picker></mat-datepicker>
+                        </div>
+
+                        <div class="date">
+                          <input class="dateInput" matInput [matDatepicker]="picker2" [min]="" formControlName="dueDate">
+                          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                          <label (click)="picker2.open()"></label>
+                          <mat-datepicker #picker2></mat-datepicker>
+                        </div>
+
+                        <div>
+                          <mat-select-trigger>
+                          </mat-select-trigger>
+                        </div>
+
+                        <div class="select">
+                          <mat-form-field appearance="fill">
+                            <mat-select multiple formControlName="assignees">
+                              <mat-option *ngFor="let member of project.members" [value]="member">{{member}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </mat-card-actions>
+                      <button type="submit">Add</button>
+                    </form>
+                  </mat-card>
+
+                </div>
+              </div> -->
+              <!-- ----------------------------------------------------------------------- -->
+            </div>
+          </div>
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-secondary add-status-button" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="true">
+              Add Status
+            </button>
+          <ul class="dropdown-menu position-fixed" aria-labelledby="dropdownMenuButton1">
+            <div class="add-status-box">
+                <div class="container">
+                <input class="form-control" placeholder="status" type="text" name="status" id="status" [(ngModel)]="newStatus.status">
+                <button class="btn btn-primary" (click)="addStatus()">Add</button>
+              </div>
+            </div>
+          </ul>
+        </div>
+
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+</div>

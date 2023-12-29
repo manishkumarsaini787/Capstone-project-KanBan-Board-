@@ -1,0 +1,112 @@
+.header{
+  width: 100%;
+  height: 60px;
+  background-color: #10e1de;
+  color: whitesmoke;
+  padding: 10px;
+  padding-right: 20px;
+  display: flex;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+.header .heading{
+  display: flex;
+  font-style: italic !important;
+
+}
+.header h1{
+  margin-top: 5px;
+  font-family: "Tinos", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+.profile{
+  display: flex;
+}
+.profile span{
+  margin-left: 5px;
+  padding: 10px;
+}
+.profile p{
+  margin: 0;
+  padding: 0;
+  width: 120px;
+  overflow:hidden;
+}
+.profile img{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+mat-nav-list .profile{
+  margin: 5px;
+
+}
+.sidenav{
+  position: fixed;
+  top: 60px;
+  width: 200px;
+  /* bottom: 45px; */
+  background-color:#10e1de;
+}
+.content{
+  height: 100%;
+}
+.drawer-container{
+  height: 100%;
+}
+
+.sidenav .drawer-footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 200px;
+  text-align: center;
+  background-color: #10e1de;
+}
+.dropdown-toggle{
+  vertical-align: bottom;
+}
+a{
+  text-decoration: none;
+  color:white;
+}
+.main-content{
+  height:90%;
+}
+input{
+  background-color:#10e1de;
+  border: none;
+  color: white;
+  width: 135px;
+}
+.project-list{
+  display: flex;
+  justify-content: space-between;
+  /* background-color: #10e1de;
+  color: whitesmoke; */
+}
+mat-panel-title{
+  color:white ;
+  background-color: #10e1de;
+  margin-top: 20px;
+}
+mat-expansion-panel-header{
+  background-color: #10e1de;
+}
+mat-nav-list{
+  background-color: #10e1de;
+}
+.p{
+  text-transform: uppercase;
+
+}
+.mat-expansion-panel{
+  background-color:#10e1de ;
+  color: white;
+}
+.b{
+  color: white;
+  background-color: #10e1de;
+  border: hidden;
+}

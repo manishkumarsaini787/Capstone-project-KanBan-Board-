@@ -1,0 +1,26 @@
+.dateInput{
+    width: 0;
+    background-color: transparent;
+    border: 0;
+}
+.header{
+    display: flex;
+}
+.close {
+    float: right;
+}
+.contents{
+    display: flex;
+}
+.contents div{
+    width: 50%;
+}
+.contents .content mat-form-field{
+    width: 100%;
+}
+.footer{
+    display: flex;
+}
+.footer div{
+    margin: 5px;
+}

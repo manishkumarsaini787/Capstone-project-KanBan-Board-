@@ -1,0 +1,83 @@
+/* .header{
+    width: 100%;
+    height: 60px;
+    background-color: #2a5555;
+    color: white;
+    padding: 10px;
+    padding-right: 20px;
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+  .header .heading{
+    display: flex;
+  }
+  .header h1{
+    margin-top: 5px;
+  }
+  .profile{
+    display: flex;
+  }
+  .profile span{
+    margin-left: 5px;
+    padding: 0;
+  }
+  .profile p{
+    margin: 0;
+    padding: 0;
+  }
+  .profile img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  mat-nav-list .profile{
+    margin: 5px;
+  }
+  .sidenav{
+    position: fixed;
+    top: 60px;
+    width: 200px; 
+    bottom: 50px;
+  }
+.content{
+    height: 100%;
+}
+.drawer-container{
+    height: 100%;
+}
+.fullheight{
+    height: 100%;
+}
+.fixheight{
+    height: 90.5%;
+}
+.sidenav .drawer-footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 200px;
+    text-align: center;
+} */
+
+
+.multiselect-item-checkbox[_ngcontent-gsf-c60] input[type=checkbox]+div[_ngcontent-gsf-c60] {
+  position: relative;
+  padding-left: 2em;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  margin: 0;
+  color: red;
+}
+.dropdown-list[_ngcontent-gsi-c60] li[_ngcontent-gsi-c60] {
+  padding: 6px 10px;
+  cursor: pointer;
+  text-align: left;
+  color: yellow;
+}

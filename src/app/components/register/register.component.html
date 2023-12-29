@@ -1,0 +1,128 @@
+<!--
+<video class="bg-video" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+	<source src="../../../assets/mp4/bg2.mp4" type="video/mp4" />
+  </video>
+
+<div class="container">
+	<div class="d-flex justify-content-center h-100">
+		<div class="card">
+			<div class="card-header">
+				<h1>Sign up</h1>
+				<div class="d-flex justify-content-end social_icon">
+					<span><i class="fab fa-facebook-square"></i></span>
+					<span><i class="fab fa-google-plus-square"></i></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<form [formGroup]="registerForm" novalidate (ngSubmit)="onSubmit()">
+          <div class="input-group form-group">
+
+						<input type="text" class="form-control" placeholder="username" name="username" formControlName="name">
+            <div class="invalid-feedback">Please fill out this field.</div>
+					</div>
+					<div class="input-group form-group ">
+
+						<input type="text" class="form-control" placeholder="email" id="email" formControlName="email">
+
+					</div>
+					<div class="input-group form-group">
+
+						<input type="password" class="form-control" placeholder="password" formControlName="password">
+					</div>
+
+					<div class="row align-items-center remember">
+						<input type="checkbox">Remember Me
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Sign up" class="btn float-right login_btn" [disabled]="registerForm.invalid">
+					</div>
+				</form>
+			</div>
+			<div class="card-footer">
+				<div class="d-flex justify-content-center links">
+					Already have an account?<a routerLink='/login'>Login</a>
+				</div>
+				<div class="d-flex justify-content-center">
+					<a href="#">Forgot your password?</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div> -->
+
+<video class="bg-video" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+	<source src="../../../assets/mp4/bg2.mp4" type="video/mp4" />
+  </video>
+
+<div class="container">
+	<div class="d-flex justify-content-center h-100">
+		<div class="card">
+			<div class="card-header">
+				<h1>Sign up</h1>
+				<div class="d-flex justify-content-end social_icon">
+					<!-- <span><i class="fab fa-facebook-square"></i></span> -->
+					<!-- <span><i class="fab fa-google-plus-square"></i></span> -->
+				</div>
+			</div>
+		<div class="card-body">
+		<form [formGroup]="registerForm" novalidate (ngSubmit)="onSubmit()">
+
+          <div class="input-group form-group">
+				<input style="width: 100%" type="text" class="form-control" placeholder="name" name="name" formControlName="name">
+				<div *ngIf="(name?.invalid && name?.touched) || name?.dirty">
+					<small style="color:red"  *ngIf="name?.errors?.['required']">
+					  name required
+					</small>
+				</div>
+			</div>
+
+
+
+
+			<div class="input-group form-group ">
+				<input style="width: 100%"  type="text" class="form-control" placeholder="email" id="email" formControlName="email">
+				<div *ngIf="(email?.invalid && email?.touched) || email?.dirty">
+					<small  style="color:red" *ngIf="email?.errors?.['pattern']">
+					  please provide valid email address
+				  	</small>
+				  <small style="color:red"  *ngIf="email?.errors?.['required']">Email is required</small>
+				</div>
+			</div>
+
+
+
+
+			<div class="input-group form-group">
+				<input style="width: 100%" type="password" class="form-control" placeholder="password" formControlName="password">
+				<div *ngIf="(password?.invalid && password?.touched) || password?.dirty">
+					<small  style="color:red" *ngIf="password?.errors?.['pattern']">
+					  Password should have min 8 letter password, with at least a symbol, upper and lower case letters
+					  and a number
+					  symbol.
+				  </small>
+				  <small style="color:red"  *ngIf="password?.errors?.['required']">password is required</small>
+				</div>
+        </div>
+<div class="input-group form-group">
+  <input style="width: 100%" type="password" class="form-control" placeholder=" confirm password" formControlName="Confirm Password">
+</div>
+
+			<div class="row align-items-center remember">
+				<!-- <input type="checkbox">Remember Me -->
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Sign up" class="btn float-right login_btn" [disabled]="registerForm.invalid">
+			</div>
+			</form>
+			</div>
+			<div class="card-footer">
+				<div class="d-flex justify-content-center links">
+					Already have an account?<a routerLink="/login">Login</a>
+				</div>
+				<div class="d-flex justify-content-center">
+					<!-- <a href="#">Forgot your password?</a> -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

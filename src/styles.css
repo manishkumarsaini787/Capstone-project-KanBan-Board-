@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: rgb(52, 51, 51);}
+.C{
+    border:1px solid rgba(3, 138, 3,0.5);
+}
+.T,.J,.X{
+    border:1px solid rgba(237, 42, 16, 0.5);
+}
+.I,.L,.F{
+    border:1px solid rgba(236, 99, 14, 0.5);
+}
+.A,.B,.D{
+    border:1px solid rgba(12, 12, 231, 0.5);
+}
+.E,.G,.H,.K{
+    border:1px solid rgba(209, 13, 177, 0.5);
+}
+.M,.N,.O,.P{
+    border:1px solid rgba(229, 248, 17, 0.5);
+}
+.Q,.R,.S,.U,.V{
+    border:1px solid rgba(61, 2, 62, 0.5);
+}
+.W,.Y,.Z{
+    border:1px solid rgba(16, 223, 227, 0.5);
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
